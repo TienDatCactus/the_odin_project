@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Page Title</title>
+  </head>
+  <body>
+    <script>
+      const getComputerChoice = () => {
+        return Math.floor(Math.random() * 3) == 1
+          ? "rock"
+          : Math.floor(Math.random() * 3) == 2
+          ? "paper"
+          : "scissor";
+      };
+
+      const getHumanChoice = () => {
+        var res = window.prompt("Rock, paper, scissor ?");
+        return res;
+      };
+
+      const playGame = () => {
+        var humanScore = 0;
+        var computerScore = 0;
+        let humanSelection = "";
+        let computerSelection = "";
+        const playRound = (humanChoice, computerChoice) => {
+          humanSelection = getHumanChoice();
+          computerSelection = getComputerChoice();
+          console.log(humanChoice);
+          console.log(computerChoice);
+          if (humanChoice.toLowerCase() == computerChoice.toLowerCase()) {
+            console.log("Draw!");
+          } else if (
+            (humanChoice.toLowerCase() == "rock" &&
+              computerChoice.toLowerCase() == "scissor") ||
+            (humanChoice.toLowerCase() == "scissor" &&
+              computerChoice.toLowerCase() == "paper") ||
+            (humanChoice.toLowerCase() == "paper" &&
+              computerChoice.toLowerCase() == "rock")
+          ) {
+            console.log("Human wins !");
+            humanScore++;
+          } else {
+            console.log("Computer wins !");
+            computerScore++;
+          }
+        };
+        for (let i = 0; i < 5; i++) {
+          playRound(humanSelection, computerSelection);
+        }
+      };
+
+      playGame();
+    </script>
+  </body>
+</html>
