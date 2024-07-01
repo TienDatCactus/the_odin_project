@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .row {
+        display: flex;
+      }
+
+      .col {
+        width: 50px;
+        height: 50px;
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="input()">Select</button>
+    <div class="container"></div>
+    <script>
+      const container = document.querySelector(".container");
+      const rows = (amount) => {
+        for (let i = 0; i < amount; i++) {
+          const row = document.createElement("div");
+          row.classList.add("row");
+
+          container.appendChild(row);
+        }
+      };
+      const cols = (amount) => {
+        const row = document.querySelectorAll(".row");
+        row.forEach((row) => {
+          for (let i = 0; i < amount; i++) {
+            const col = document.createElement("div");
+            col.classList.add("col");
+            col.addEventListener("mouseover", () => {
+              col.style.backgroundColor = "#ccc";
+            });
+            col.addEventListener("mouseleave", () => {
+              setInterval(() => {
+                col.style.backgroundColor = "white";
+              }, 600);
+            });
+            row.appendChild(col);
+          }
+        });
+      };
+
+      const input = () => {
+        let num = window.prompt(
+          "Enter the number of rows and columns you want to create ( Max 100 )"
+        );
+        if (num > 100) {
+          alert("Please enter a number less than 100");
+          input();
+        } else if (num < 100 && num > 0) {
+          rows(num);
+          cols(num);
+        } else {
+          (() => {
+            rows(16);
+            cols(16);
+          })();
+        }
+      };
+    </script>
+  </body>
+</html>
