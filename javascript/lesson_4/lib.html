@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="container">
+  <table border="1" style="max-width: 100%;white-space: nowrap;"> 
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Pages</th>
+        <th>Read</th>
+      </tr>
+    </thead>
+    <tbody data-library>
+    </tbody>
+</table>
+</div>
+
+
+  <button class="add-book">New Book</button>
+  <dialog data-modal>
+    <form data-form>
+      <div data-form-header style="display: flex;align-items: start;">
+        <h1 style="margin: 2px 10px;">Add new BOOK</h1>
+        <h2  style="margin: 2px 10px; cursor: pointer;" data-close-form>x</h2>
+      </div>
+      <div>
+        <label for="title">Title</label>
+        <input type="text" id="title">
+      </div>
+      <div>
+        <label for="author">Author</label>
+        <input type="text" name="author" id="author">
+      </div>
+      <div>
+        <label for="pages">Pages</label>
+        <input type="number" name="pages" id="pages">
+      </div>
+      <div>
+        <label for="read">Have you read this?</label>
+        <span>
+          <input type="radio" name="read" id="readYes" value="true">Yes
+          <input type="radio" name="read" id="readNo" value="false">No
+        </span>
+      </div>
+      <input type="submit">
+    </form>
+  </dialog>
+  <script>
+    const myLibrary = [];
+    const form = document.querySelector('[data-form]')
+    const modal = document.querySelector('[data-modal]')
+    document.querySelector('.add-book').addEventListener('click',()=>{
+      modal.showModal()
+    })
+    console.log(modal);
+  function Book(title, author, pages, read) {
+  this.title = title;
+  this.author = author;
+  this.pages = pages;
+  this.read = true;
+  this.info = function () {
+    return `${title} by ${author}, ${pages} pages, ${
+      read ? "read" : "not read yet"
+    }`;
+  };
+}
+
+function addBookToLibrary() {
+  let title = document.querySelector('#title').value
+  let author= document.querySelector('#author').value
+  let pages = document.querySelector('#title').value
+  let readYes = document.querySelector('#readYes')
+  let readNo = document.querySelector('#readNo')
+
+  let book = new Book(title,author,pages,([readYes,readNo].forEach((e)=>{return e.checked ? e.value : "false"})))
+  myLibrary.push(book)
+}
+form.addEventListener('submit',(e)=>{
+  e.preventDefault();
+  addBookToLibrary();
+  modal.close()
+display()
+})
+
+function display(){
+  let body = document.querySelector('[data-library]')
+  console.log(myLibrary);
+  return (body.innerHTML = `${myLibrary.map((book) => `
+          <tr>
+            <td>${book.title}</td>
+            <td>${book.author}</td>
+            <td>${book.pages}</td>
+            <td>${book.read ? "Read" : "Not Read"}</td>
+          </tr>
+        `).join('')}`
+  )
+}
+  </script>
+</body>
+</html>
